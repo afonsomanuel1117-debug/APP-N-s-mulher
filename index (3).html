@@ -1,0 +1,410 @@
+<!DOCTYPE html><html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#c0436a" />
+  <title>Nós Mulher – Saúde & Ciclo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rose: #c0436a;
+      --rose-dark: #9e2f55;
+      --rose-light: #f2d4de;
+      --blush: #fdf0f4;
+      --deep: #351722;
+      --mid: #7a3a50;
+      --gold: #c9976a;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(60,10,30,.12);
+    }* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: linear-gradient(180deg, #fff8fb, #fdf0f4);
+  color: var(--deep);
+  min-height: 100vh;
+}
+
+header {
+  background: linear-gradient(135deg, #3a1a25, #7a1040, #c0436a);
+  color: white;
+  text-align: center;
+  padding: 42px 20px 34px;
+  box-shadow: var(--shadow);
+}
+
+header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+header p {
+  margin-top: 8px;
+  opacity: .85;
+  letter-spacing: .08em;
+}
+
+.creator {
+  margin-top: 14px;
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 30px;
+  padding: 6px 16px;
+  font-size: .8rem;
+}
+
+nav {
+  display: flex;
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+  border-bottom: 1px solid #f0d8e1;
+}
+
+nav button {
+  flex: 1;
+  min-width: 120px;
+  border: none;
+  background: transparent;
+  padding: 16px 12px;
+  font-weight: 600;
+  color: var(--mid);
+  cursor: pointer;
+}
+
+nav button.active {
+  color: var(--rose);
+  border-bottom: 3px solid var(--rose);
+  background: #fff7fa;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 22px 16px 80px;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.card {
+  background: white;
+  border-radius: 22px;
+  padding: 24px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: var(--rose);
+  margin-bottom: 18px;
+}
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--mid);
+}
+
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1.5px solid #e8c8d4;
+  background: #fffafb;
+  font-size: 1rem;
+}
+
+.field textarea { min-height: 100px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.btn {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 16px;
+  background: #fff6f9;
+  border: 1px solid var(--rose-light);
+  display: none;
+}
+
+.cycle-wheel {
+  width: 280px;
+  height: 280px;
+  margin: 20px auto;
+  border-radius: 50%;
+  background: conic-gradient(
+    #f8b6c8 0deg 65deg,
+    #ffd97d 65deg 180deg,
+    #a8d8ff 180deg 230deg,
+    #c7f0d8 230deg 360deg
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.cycle-wheel::before {
+  content: '';
+  width: 170px;
+  height: 170px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.cycle-center {
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+
+.cycle-center h3 {
+  color: var(--rose);
+  font-size: 1.6rem;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+#chat-box {
+  height: 360px;
+  overflow-y: auto;
+  border: 1px solid #ead1db;
+  border-radius: 16px;
+  padding: 14px;
+  background: #fffafb;
+  margin-bottom: 14px;
+}
+
+.msg {
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  max-width: 85%;
+  line-height: 1.5;
+}
+
+.bot {
+  background: var(--rose-light);
+}
+
+.user {
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color: white;
+  margin-left: auto;
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  color: #8b6070;
+  font-size: .85rem;
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Nós Mulher</h1>
+    <p>Saúde Feminina · Ciclo · Bem-estar</p>
+    <div class="creator">Criado por Afonso Adão Manuel</div>
+  </header>  <nav>
+    <button class="active" onclick="showTab('perfil', this)">👤 Perfil</button>
+    <button onclick="showTab('ciclo', this)">📅 Ciclo</button>
+    <button onclick="showTab('bussola', this)">🌸 Bússola</button>
+    <button onclick="showTab('assistente', this)">🤖 Afonso Manuel</button>
+  </nav>  <main>
+    <section id="tab-perfil" class="tab-panel active">
+      <div class="card">
+        <div class="card-title">Seu Perfil</div>
+        <div class="grid">
+          <div class="field"><label>Nome</label><input id="f-nome"></div>
+          <div class="field"><label>Idade</label><input id="f-idade" type="number"></div>
+          <div class="field"><label>Peso (kg)</label><input id="f-peso" type="number"></div>
+          <div class="field"><label>Altura (cm)</label><input id="f-altura" type="number"></div>
+        </div>
+        <div class="field"><label>Estado de Saúde</label><input id="f-saude"></div>
+        <div class="field"><label>Método Contraceptivo</label><input id="f-contra"></div>
+        <div class="field"><label>Observações</label><textarea id="f-obs"></textarea></div>
+        <button class="btn" onclick="salvarPerfil()">Salvar Perfil</button>
+      </div>
+    </section><section id="tab-ciclo" class="tab-panel">
+  <div class="card">
+    <div class="card-title">Registo do Ciclo</div>
+    <div class="grid">
+      <div class="field"><label>Última Menstruação</label><input id="c-ultima" type="date"></div>
+      <div class="field"><label>Duração do Ciclo</label><input id="c-duracao" type="number" value="28"></div>
+      <div class="field"><label>Duração da Menstruação</label><input id="c-mens" type="number" value="5"></div>
+      <div class="field"><label>Regularidade</label><input id="c-regular" value="Regular"></div>
+    </div>
+    <button class="btn" onclick="calcularCiclo()">Calcular Ciclo</button>
+    <div class="result" id="ciclo-result"></div>
+  </div>
+</section>
+
+<section id="tab-bussola" class="tab-panel">
+  <div class="card">
+    <div class="card-title">Bússola Feminina Circular</div>
+    <div class="cycle-wheel">
+      <div class="cycle-center">
+        <h3 id="fase-atual">Aguardando</h3>
+        <p id="dia-atual">Dia do ciclo</p>
+      </div>
+    </div>
+    <div class="result" id="bussola-result" style="display:block;"></div>
+  </div>
+</section>
+
+<section id="tab-assistente" class="tab-panel">
+  <div class="card">
+    <div class="card-title">Assistente Virtual Afonso Manuel</div>
+    <div id="chat-box">
+      <div class="msg bot">Olá! Sou o Afonso Manuel. Estou aqui para conversar consigo, esclarecer dúvidas sobre saúde feminina, ciclo menstrual, bem-estar e curiosidades. Como posso ajudar hoje?</div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr auto;">
+      <input id="chat-input" placeholder="Escreva a sua mensagem..." onkeydown="if(event.key==='Enter') enviarChat()">
+      <button class="btn" style="width:auto;padding:14px 24px;" onclick="enviarChat()">Enviar</button>
+    </div>
+  </div>
+</section>
+
+  </main>  <footer>
+    Nós Mulher © 2026 · Aplicativo profissional de saúde feminina
+  </footer>  <script>
+    const state = {
+      perfil: JSON.parse(localStorage.getItem('nosMulherPerfil') || '{}'),
+      ciclo: JSON.parse(localStorage.getItem('nosMulherCiclo') || '{}')
+    };
+
+    function showTab(id, btn) {
+      document.querySelectorAll('.tab-panel').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function salvarPerfil() {
+      state.perfil = {
+        nome: document.getElementById('f-nome').value,
+        idade: document.getElementById('f-idade').value,
+        peso: document.getElementById('f-peso').value,
+        altura: document.getElementById('f-altura').value,
+        saude: document.getElementById('f-saude').value,
+        contra: document.getElementById('f-contra').value,
+        obs: document.getElementById('f-obs').value
+      };
+      localStorage.setItem('nosMulherPerfil', JSON.stringify(state.perfil));
+      alert('Perfil salvo com sucesso!');
+    }
+
+    function calcularCiclo() {
+      const ultima = new Date(document.getElementById('c-ultima').value);
+      if (isNaN(ultima)) {
+        alert('Selecione a data da última menstruação.');
+        return;
+      }
+
+      const duracao = parseInt(document.getElementById('c-duracao').value) || 28;
+      const menstruacao = parseInt(document.getElementById('c-mens').value) || 5;
+      const hoje = new Date();
+      const diff = Math.floor((hoje - ultima) / (1000 * 60 * 60 * 24));
+      const dia = ((diff % duracao) + duracao) % duracao + 1;
+
+      let fase = 'Fase Segura';
+      if (dia <= menstruacao) fase = 'Menstruação';
+      else if (dia >= duracao/2 - 2 && dia <= duracao/2 + 2) fase = 'Ovulação';
+      else if (dia > menstruacao && dia < duracao/2 - 2) fase = 'Fase Folicular';
+      else fase = 'Fase Lútea';
+
+      state.ciclo = { ultima: document.getElementById('c-ultima').value, duracao, menstruacao, dia, fase };
+      localStorage.setItem('nosMulherCiclo', JSON.stringify(state.ciclo));
+
+      document.getElementById('ciclo-result').style.display = 'block';
+      document.getElementById('ciclo-result').innerHTML = `<strong>Dia atual do ciclo:</strong> ${dia}<br><strong>Fase:</strong> ${fase}`;
+
+      atualizarBussola();
+      agendarNotificacao();
+    }
+
+    function atualizarBussola() {
+      if (!state.ciclo.dia) return;
+      document.getElementById('fase-atual').textContent = state.ciclo.fase;
+      document.getElementById('dia-atual').textContent = `Dia ${state.ciclo.dia} do ciclo`;
+      document.getElementById('bussola-result').innerHTML = `
+        <strong>Fase atual:</strong> ${state.ciclo.fase}<br>
+        <strong>Dia do ciclo:</strong> ${state.ciclo.dia}<br>
+        <strong>Duração:</strong> ${state.ciclo.duracao} dias<br>
+        <strong>Período menstrual:</strong> ${state.ciclo.menstruacao} dias`;
+    }
+
+    function agendarNotificacao() {
+      if ('Notification' in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted' && state.ciclo.fase === 'Menstruação') {
+            new Notification('Nós Mulher', {
+              body: 'Hoje é o início do seu período menstrual. Cuide-se bem! 🌸'
+            });
+          }
+        });
+      }
+    }
+
+    function enviarChat() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const box = document.getElementById('chat-box');
+      box.innerHTML += `<div class="msg user">${text}</div>`;
+
+      let resposta = 'Estou aqui para ajudar com informações sobre saúde feminina, ciclo menstrual, bem-estar e autocuidado.';
+
+      const t = text.toLowerCase();
+      if (t.includes('tpm')) resposta = 'A TPM pode causar alterações de humor, inchaço e cólicas. Hidratação, descanso e alimentação equilibrada ajudam bastante.';
+      else if (t.includes('ovulação')) resposta = 'A ovulação geralmente ocorre no meio do ciclo. É o período de maior fertilidade.';
+      else if (t.includes('menstruação')) resposta = 'A menstruação é uma parte natural do ciclo. Se houver dor intensa ou irregularidade frequente, procure um ginecologista.';
+      else if (t.includes('olá') || t.includes('oi')) resposta = 'Olá! É um prazer conversar consigo. Como posso ajudar hoje?';
+
+      setTimeout(() => {
+        box.innerHTML += `<div class="msg bot">${resposta}</div>`;
+        box.scrollTop = box.scrollHeight;
+      }, 700);
+
+      input.value = '';
+      box.scrollTop = box.scrollHeight;
+    }
+
+    window.onload = () => {
+      if (state.ciclo && state.ciclo.dia) atualizarBussola();
+    };
+  </script></body>
+</html>
